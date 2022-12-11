@@ -1,0 +1,23 @@
+{
+  "name": "http-query-executor",
+  "version": "0.1.0",
+  "description": "server http (base on expressjs) yg digunakan untuk melaksanakan query dari frontend dengan payload yg sudah menggunakan end-to-end encription",
+  "main": "index.js",
+  "repository": "https://github.com/rohmanahmad/http-query-executor",
+  "author": "rohmanahmad <rohmanmail@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@godaddy/terminus": "^4.11.2",
+    "body-parser": "^1.20.1",
+    "chalk": "4.1.2",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "lodash.result": "^4.5.2",
+    "moment": "^2.29.4",
+    "mongodb": "^4.12.1",
+    "require-all": "^3.0.0"
+  }
+}
