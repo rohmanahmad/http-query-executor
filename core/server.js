@@ -25,6 +25,7 @@ const helpers = requireAll({
 })
 const { logInfo } = helpers.logger
 const app = express()
+app.use('/public', express.static('statics'))
 
 class Server {
     contructor({ host, port }) {
@@ -48,7 +49,11 @@ class Server {
     getGlobalMiddlewares() {
         const allMiddlewares = this.getAllMiddlewares()
         const globalMiddlewares = getResult(this.config, 'app.global_middlewares', [])
-        if (globalMiddlewares.length > 0) return globalMiddlewares.map(x => allMiddlewares[x]).filter(x => x).map(x => x.bind(this))
+        if (globalMiddlewares.length > 0)
+            return globalMiddlewares
+                .map(x => allMiddlewares[x])
+                .filter(x => x)
+                .map(x => x.bind(this))
         return []
     }
     getRouteMiddlewares(namedMiddlewares = []) { // string array
@@ -62,31 +67,35 @@ class Server {
     // END OF GETTER
 
     async routes() {
-        app.use(bodyParser.json())
-        app.use(bodyParser.urlencoded({ extended: false }))
-        await this.registerProviders()
-        if (this.config.app.node_env === 'production') app.use(compression()) // best practice for performance
-        for (const routeGroup in routes) {
-            const group = routes[routeGroup]
-            const groupName = getResult(group, 'routes.name', '-')
-            const routePrefix = getResult(group, 'routes.prefix', '-')
-            const routeList = getResult(group, 'routes.list', [])
-            if (routeList.length === 0) continue;
-            for (const route of routeList) {
-                const routeName = [groupName, route.name].join('_').replace('-', '_')
-                const middlewares = [
-                    ...this.getGlobalMiddlewares(),
-                    ...this.getRouteMiddlewares(route.middlewares)
-                ]
-                this.registerRoute({
-                    name: routeName,
-                    group_name: groupName,
-                    method: route.method || 'GET', // default route is GET
-                    path: join(routePrefix, route.path, '/'),
-                    middlewares,
-                    controller: route.controller
-                })
+        try {
+            app.use(bodyParser.json())
+            app.use(bodyParser.urlencoded({ extended: false }))
+            await this.registerProviders()
+            if (this.config.app.node_env === 'production') app.use(compression()) // best practice for performance
+            for (const routeGroup in routes) {
+                const group = routes[routeGroup]
+                const groupName = getResult(group, 'routes.name', '-')
+                const routePrefix = getResult(group, 'routes.prefix', '-')
+                const routeList = getResult(group, 'routes.list', [])
+                if (routeList.length === 0) continue;
+                for (const route of routeList) {
+                    const routeName = [groupName, route.name].join('_').replace('-', '_')
+                    const middlewares = [
+                        ...this.getGlobalMiddlewares(),
+                        ...this.getRouteMiddlewares(route.middlewares)
+                    ]
+                    this.registerRoute({
+                        name: routeName,
+                        group_name: groupName,
+                        method: route.method || 'GET', // default route is GET
+                        path: join(routePrefix, route.path),
+                        middlewares,
+                        controller: route.controller
+                    })
+                }
             }
+        } catch (err) {
+            throw err
         }
     }
 
@@ -95,6 +104,7 @@ class Server {
             this.providerInstance = {}
             this.providers = {}
             for (const pName in providers) {
+                logInfo(`Registering Provider (${pName})`)
                 const Provider = providers[pName]
                 const p = new Provider(this.config.providers[pName])
                 if (!p.boot) throw new Error(`In (${pName}) Provider required "boot" function.`)
@@ -102,6 +112,7 @@ class Server {
                 this.providers[pName] = await p.boot()
                 this.providerInstance[pName] = p // digunakan hanya ketika server closing / exiting / sigterm (untuk panggil "close")
             }
+            return true
         } catch (err) {
             throw err
         }
@@ -109,9 +120,9 @@ class Server {
 
     registerRoute({ name, method, path, middlewares, controller }) {
         method = method.toLowerCase()
-        logInfo('registering route', name, `[${method.toUpperCase()}]`, path)
+        logInfo('Registering Route', name, `[${method.toUpperCase()}]`, path)
         let r = app[method]
-        if (typeof app[method] !== 'function') throw new Error(`invalid method [${method.toUpperCase()}] from route "${name}"!`)
+        if (typeof app[method] !== 'function') throw new Error(`Invalid method [${method.toUpperCase()}] from route "${name}"!`)
         app[method](path, middlewares, controller.bind(this))
     }
 

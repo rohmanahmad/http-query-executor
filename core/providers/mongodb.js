@@ -9,11 +9,15 @@ class MongoDBProvider {
     }
 
     async boot() {
-        this.client = new MongoClient(this.config.dsn)
-        await this.client.connect()
-        const db = this.client.db()
-        db.collection('restart').insertOne({restart_at: new Date(), env: process.env})
-        return db
+        try {
+            this.client = new MongoClient(this.config.dsn)
+            await this.client.connect()
+            const db = this.client.db()
+            db.collection('restart').insertOne({restart_at: new Date(), env: process.env})
+            return db
+        } catch (err) {
+            throw err
+        }
     }
 
     async close() {

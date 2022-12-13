@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption Test</title>
+    <link rel="stylesheet" href="/public/libs/bootstrap/css/bootstrap.min.css">
+    <style>
+        .pd-t-5 {
+            padding-top: 5px;
+        }
+        .pd-t-10 {
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body class="container">
+    <h1>Encryption Test</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-2">
+            Type:
+        </div>
+        <div class="col-md-3">
+            <select id="mode" class="form-control w-100">
+                <option value="encrypt">Encrypt</option>
+                <option value="decript">Decrypt</option>
+            </select>
+        </div>
+    </div>
+    <div class="row pd-t-10">
+        <div class="col-md-2">
+            Model:
+        </div>
+        <div class="col-md-3">
+            <select id="mode" class="form-control w-100">
+                <option value="symmetric">Symmetric</option>
+                <option value="asymmetric">Asymmetric</option>
+            </select>
+        </div>
+    </div>
+    <div class="row pd-t-10">
+        <div class="col-md-2">
+            Key Pair:
+        </div>
+        <div class="col-md-3">
+            <label id="key-pair">None</label>
+        </div>
+    </div>
+    <div class="row pd-t-10">
+        <div class="col-md-2">
+            Shared Key:
+        </div>
+        <div class="col-md-3">
+            <label id="key-pair">None</label>
+        </div>
+    </div>
+    <div class="row pd-t-10">
+        <div class="col-md-2">
+            Data:
+        </div>
+        <div class="col-md-8">
+            <textarea id="text-data" class="form-control" cols="30" rows="10" style="width: 100%;"></textarea>
+        </div>
+    </div>
+    <div class="row pd-t-10">
+        <div class="col-md-10">
+            <button class="btn btn-primary pull-right" onclick="start()">Encrypt</button>
+        </div>
+    </div>
+    <div class="row pd-t-10">
+        <div class="col-md-12">
+            Result:
+        </div>
+        <div class="col-md-10">
+            <pre id="encrypted-message"></pre>
+        </div>
+    </div>
+
+    <!-- <script src="/public/libs/bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="/public/libs/nacl-fast.min.js" defer></script>
+    <script src="/public/libs/nacl-util.min.js" defer></script>
+    <script src="/public/libs/nacl-implementation.js" defer></script>
+    <script src="/public/modules/encryption.js" defer></script>
+</body>
+</html>

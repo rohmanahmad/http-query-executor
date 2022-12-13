@@ -15,5 +15,8 @@ module.exports = {
         port: getEnv('MYSQL_PORT'),
         user: getEnv('MYSQL_USER'),
         pass: getEnv('MYSQL_PASS')
+    },
+    e2e: {
+        mode: 'asymmetric', // ['asymmetric', 'symmetric']
     }
 }
