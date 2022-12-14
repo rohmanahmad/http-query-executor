@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/libs/bootstrap-5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/utils.css">
+    <title>MySQL Demo API</title>
+</head>
+<body class="container">
+    <script src="/public/modules/fetch-class-extends.js" defer></script>
+    <script src="/public/modules/sql.js" defer></script>
+    <script src="/public/modules/sql-demo.js" defer></script>
+    <h1>MySQL Demo API</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="exampleInputEmail1">SQL Script</label>
+                <textarea class="form-control" id="sql-script" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="exampleInputEmail1">Bind Values</label>
+            <div class="wrap" id="wrap-values">
+                <!-- childs -->
+            </div>
+            <button class="btn btn-warning float-end text-white" onclick="addValue()">Add Value</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <button class="btn btn-primary float-end mg-t-10" onclick="execute()">Run Script</button>
+            <button class="btn btn-danger float-start mg-t-10" onclick="init()">Reset</button>
+        </div>
+    </div>
+    <div class="row mg-t-10">
+        <div class="col-md-8">
+            <hr>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Result</label>
+                <pre class=" bd-grey mg-t-10" style="min-height: 100px;width: 100%;"></pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
