@@ -22,23 +22,23 @@ class NaClImpl {
             return box.keyPair()
     }
 
-    encrypt (data, key, sharedKey, customMode) {
+    encrypt (sharedKey, data, key, customMode) {
         if (customMode) this.config.mode = customMode
         if (this.config.mode === 'symmetric') 
-            return this.symmetricEncript(data, key)
+            return this.symmetricEncrypt(key, data)
         else 
-            return this.asymmetricEncrypt(data, key, sharedKey)
+            return this.asymmetricEncrypt(sharedKey, data)
     }
-    decript (strMessage, key, sharedKey, customMode) {
+    decrypt (sharedKey, strMessage, key, customMode) {
         if (customMode) this.config.mode = customMode
         if (this.config.mode === 'symmetric') 
-            return this.symmetricDecrypt(strMessage, key)
+            return this.symmetricDecrypt(key, strMessage)
         else 
-            return this.asymmetricDecrypt(strMessage, key, sharedKey)
+            return this.asymmetricDecrypt(sharedKey, strMessage, key)
     }
 
     // SYMMETRIC
-    symmetricEncript(data, key) {
+    symmetricEncrypt(key, data) {
         try {
             const keyUint8Array = decodeBase64(key)
             const nonce = this.getNewNonce()
@@ -55,7 +55,7 @@ class NaClImpl {
             throw err
         }
     }
-    symmetricDecript(messageWithNonce, key) {
+    symmetricDecrypt(key, messageWithNonce) {
         try {
             const keyUint8Array = decodeBase64(key)
             const messageWithNonceAsUint8Array = decodeBase64(messageWithNonce)
@@ -74,7 +74,7 @@ class NaClImpl {
     }
 
     // ASYMMETRIC
-    asymmetricEncrypt (data, key, sharedKey) {
+    asymmetricEncrypt (sharedKey, data, key) {
         try {
             const nonce = this.getNewNonce()
             const messageUint8 = decodeUTF8(JSON.stringify(data))
@@ -84,17 +84,16 @@ class NaClImpl {
             const fullMessage = new Uint8Array(nonce.length + encrypted.length)
             fullMessage.set(nonce)
             fullMessage.set(encrypted, nonce.length)
-
             const base64FullMessage = encodeBase64(fullMessage)
             return base64FullMessage
         } catch (err) {
             throw err
         }
     }
-    asymmetricDecrypt (strMessage, key, sharedKey) { // strMessage is String
+    asymmetricDecrypt (sharedKey, strMessage, key) { // strMessage is a String
         try {
             const messageWithNonceAsUint8Array = decodeBase64(strMessage)
-            const nonce = messageWithNonceAsUint8Array.slice(0, box.nonce.length)
+            const nonce = messageWithNonceAsUint8Array.slice(0, box.nonceLength)
             const message = messageWithNonceAsUint8Array.slice(box.nonceLength, strMessage.length)
             const decrypted = key
                 ? box.open(message, nonce, key, sharedKey)

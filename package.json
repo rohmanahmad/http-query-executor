@@ -1,6 +1,6 @@
 {
   "name": "http-query-executor",
-  "version": "0.1.0-dev1",
+  "version": "0.1.0-dev2",
   "description": "server http (base on expressjs) yg digunakan untuk melaksanakan query dari frontend dengan payload yg sudah menggunakan end-to-end encription",
   "main": "index.js",
   "repository": "https://github.com/rohmanahmad/http-query-executor",

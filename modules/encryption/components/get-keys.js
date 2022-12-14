@@ -3,26 +3,29 @@
 const { box } = require('tweetnacl/nacl-fast')
 
 const keyPair = async function keyPair(request, response) {
-    const { mode='symmetric' } = this.input.queries
-    let keyA, keyB, encodedA, encodedB
-    keyA = this.providers.e2e.generateKeyPair(mode)
-    if (mode === 'asymmetric') {
-        keyB = this.providers.e2e.generateKeyPair(mode)
-        const Uint8ArrayEncodedA = box.before(keyB.publicKey, keyA.secretKey)
-        const Uint8ArrayEncodedB = box.before(keyA.publicKey, keyB.secretKey)
-        encodedA = Uint8ArrayEncodedA.join(',')
-        encodedB = Uint8ArrayEncodedB.join(',')
-    }
-    response.apiCollection({
-        finalKey: encodedA || keyA,
-        keyB: encodedB
+    let { public_key: publicKey, secret_key: secretKey } = this.input.body
+    let keyA, keyB, encodedA
+    
+    keyA = this.providers.e2e.generateKeyPair('asymmetric')
+
+    publicKey = new Uint8Array(publicKey.split(','))
+    secretKey = new Uint8Array(secretKey.split(','))
+
+    keyB = { publicKey, secretKey }
+    
+    const Uint8ArrayEncodedA = box.before(keyB.publicKey, keyA.secretKey)
+    
+    encodedA = Uint8ArrayEncodedA.join(',')
+    
+    response.json({
+        final: encodedA
     })
 }
 
 const keyPairRouteController = {
     name: 'get_pair_key',
     path: '/key/pair',
-    method: 'GET',
+    method: 'POST',
     middlewares: ['auth'],
     controller: keyPair
 }
