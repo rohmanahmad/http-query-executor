@@ -11,10 +11,15 @@ module.exports = {
         dsn: getEnv('MONGODB_DSN')
     },
     mysql: {
-        host: getEnv('MYSQL_HOST'),
-        port: getEnv('MYSQL_PORT'),
-        user: getEnv('MYSQL_USER'),
-        pass: getEnv('MYSQL_PASS')
+        connection: {
+            host: getEnv('MYSQL_HOST'),
+            port: getEnv('MYSQL_PORT'),
+            user: getEnv('MYSQL_USER'),
+            password: getEnv('MYSQL_PASS'),
+            database: getEnv('MYSQL_DB'),
+            connectionLimit: getEnv('MYSQL_POOL_LIMIT', 10),
+            queueLimit: 0,
+        }
     },
     e2e: {
         mode: 'asymmetric', // ['asymmetric', 'symmetric']

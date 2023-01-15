@@ -7,6 +7,7 @@ const compression = require('compression')
 const getResult = require('lodash.result')
 const { join } = require('path')
 const bodyParser = require('body-parser')
+const helmet = require('helmet')
 const { createTerminus } = require('@godaddy/terminus')
 const responseExtend = require('./response')
 const providers = requireAll({
@@ -23,7 +24,7 @@ const helpers = requireAll({
         return name
     }
 })
-const { logInfo } = helpers.logger
+const { logInfo, logError } = helpers.logger
 const app = express()
 app.use('/public', express.static('statics'))
 
@@ -68,8 +69,10 @@ class Server {
 
     async routes() {
         try {
-            app.use(bodyParser.json())
+            app.disable('x-powered-by')
+            app.use(helmet())
             app.use(bodyParser.urlencoded({ extended: false }))
+            app.use(bodyParser.json())
             await this.registerProviders()
             if (this.config.app.node_env === 'production') app.use(compression()) // best practice for performance
             for (const routeGroup in routes) {
@@ -79,7 +82,8 @@ class Server {
                 const routeList = getResult(group, 'routes.list', [])
                 if (routeList.length === 0) continue;
                 for (const route of routeList) {
-                    const routeName = [groupName, route.name].join('_').replace('-', '_')
+                    const method = route.method || 'GET' // default route is GET
+                    const routeName = [route.method.toLowerCase(), groupName, route.name].join('_').replace('-', '_')
                     const middlewares = [
                         ...this.getGlobalMiddlewares(),
                         ...this.getRouteMiddlewares(route.middlewares)
@@ -87,13 +91,29 @@ class Server {
                     this.registerRoute({
                         name: routeName,
                         group_name: groupName,
-                        method: route.method || 'GET', // default route is GET
+                        method,
                         path: join(routePrefix, route.path),
                         middlewares,
                         controller: route.controller
                     })
                 }
             }
+            // registering route not-found
+            this.registerRoute({
+                name: 'any_not_found',
+                group_name: 'not_found',
+                method: 'all',
+                path: '*',
+                middlewares: [],
+                controller: function (request, response) {
+                    response.json({
+                        status: 404,
+                        method: request.method,
+                        message: 'HTTP URL Not Found'
+                    })
+                }
+            })
+            app.use(this.handleError.bind(this)) // handling error
         } catch (err) {
             throw err
         }
@@ -177,6 +197,22 @@ class Server {
     }
     async healthCheck({ state }) {
         return state
+    }
+    handleError(error, request, response, next) {
+        const
+            statusCode=500,
+            message = error && error.message ? error.message : 'Server Error'
+        if (!response.headerSent) {
+            response
+                .status(statusCode)
+                .json({
+                    path: request.path,
+                    method: request.method,
+                    status: statusCode,
+                    message,
+                })
+        }
+        if (error) logError(error)
     }
 }
 

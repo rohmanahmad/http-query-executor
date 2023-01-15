@@ -27,7 +27,7 @@ class FetchExtend {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: data
+                body: typeof data !== 'string' ? JSON.stringify(data) : data
             })
             .then(res => {
                 resolve(res.json())

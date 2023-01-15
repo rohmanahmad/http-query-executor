@@ -1,6 +1,6 @@
 {
   "name": "http-query-executor",
-  "version": "0.1.0-dev3",
+  "version": "0.1.0-dev4",
   "description": "server http (base on expressjs) yg digunakan untuk melaksanakan query dari frontend dengan payload yg sudah menggunakan end-to-end encription",
   "main": "index.js",
   "repository": "https://github.com/rohmanahmad/http-query-executor",
@@ -15,9 +15,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "helmet": "^6.0.1",
     "lodash.result": "^4.5.2",
     "moment": "^2.29.4",
     "mongodb": "^4.12.1",
+    "mysql2": "^2.3.3",
     "require-all": "^3.0.0",
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1"
