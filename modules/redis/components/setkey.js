@@ -2,10 +2,12 @@
 
 const execute = async function execute(request, response, next) {
     try {
-        const { key, value, expired=10 } = request.body
+        let { key, value, expired=10 } = request.body
         if (!key || !value) throw new Error('Invalid Key Or Value')
-        const data = await this.providers.redis.set(key, value, { EX: expired })
-        response.json(data)
+        if (typeof value !== 'string') throw new Error('Value Should be a String')
+        if (typeof expired !== 'number') throw new Error('Invalid Expired Value')
+        await this.providers.redis.set(key, value, { EX: expired })
+        response.json({ status: true })
     } catch (err) {
         next(err)
     }

@@ -2,9 +2,9 @@
 
 const execute = async function execute(request, response, next) {
     try {
-        const { key } = request.query
-        const data = await this.providers.redis.del(key)
-        response.json(data)
+        const { key: k } = request.query
+        await this.providers.redis.del(k)
+        response.json({ status: true })
     } catch (err) {
         next(err)
     }
@@ -13,7 +13,7 @@ const execute = async function execute(request, response, next) {
 const delkeyRouteController = {
     name: 'delkey',
     path: '/delkey', // action > see "availableActions" var
-    method: 'POST',
+    method: 'GET',
     middlewares: ['auth'],
     controller: execute
 }
