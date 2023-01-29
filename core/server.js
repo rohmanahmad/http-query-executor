@@ -1,23 +1,30 @@
 'use strict'
 
 const requireAll = require('require-all')
-const http = require("http")
+const http = require('http')
 const express = require('express')
 const compression = require('compression')
 const getResult = require('lodash.result')
-const { join } = require('path')
+const { join, resolve } = require('path')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
 const { createTerminus } = require('@godaddy/terminus')
 const responseExtend = require('./response')
+
+const acceptedProviders = require(resolve('configs/providers')).components
 const providers = requireAll({
-    dirname: __dirname + '/providers',
+    dirname: resolve('core/providers'),
     recursive: false,
-    filter: /(.*).js$/
+    // filter: /(.*).js$/
+    filter: (filename) => {
+        const fN = filename.replace('.js', '')
+        const x = acceptedProviders.indexOf(fN) > -1
+        return x ? fN : false
+    }
 })
 const routes = require('./routes')
 const helpers = requireAll({
-    dirname: __dirname + '/helpers',
+    dirname: resolve('core/helpers'),
     recursive: true,
     filter: /(.*)\.js$/,
     map: (name) => {

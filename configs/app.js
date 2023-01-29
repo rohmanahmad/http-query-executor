@@ -1,5 +1,8 @@
+'use strict'
+
+const { resolve } = require('path')
 const moment = require('moment')
-const { version, author } = require('../package.json')
+const { version, author } = require(resolve('package.json'))
 
 module.exports = {
     node_env: process.env.NODE_ENV || 'production',
@@ -11,8 +14,8 @@ module.exports = {
         author
     },
     middlewares: {
-        collector: require('../core/middlewares/collector'),
-        auth: require('../core/middlewares/auth'),
+        collector: require(resolve('core/middlewares/collector')),
+        auth: require(resolve('core/middlewares/auth')),
     },
     global_middlewares: [
         'collector'

@@ -1,9 +1,8 @@
 'use strict'
 
-const rA = require('require-all')
-
-const routes = rA({
-    dirname: __dirname + '/../modules/',
+const { resolve } = require('path')
+const routes = require('require-all')({
+    dirname: resolve('modules'),
     filter: /routes.js$/,
     recursive: true,
     map: (name) => {

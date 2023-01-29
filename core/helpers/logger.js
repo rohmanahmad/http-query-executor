@@ -12,16 +12,16 @@ const getTime = () => {
 }
 
 const logInfo = function (...msg) {
-    console.log(info(getTime() + ' >>'), '[INFO]', ...msg)
+    console.log(info(getTime() + ' >>'), `[PID: ${process.pid}]`, '[INFO]', ...msg)
 }
 const logWarning = function (...msg) {
-    console.log(warn(getTime() + ' >>'), '[WARN]', ...msg)
+    console.log(warn(getTime() + ' >>'), `[PID: ${process.pid}]`, '[WARN]', ...msg)
 }
 const logSuccess = function (...msg) {
-    console.log(success(getTime() + ' >>'), '[SUCCESS]', ...msg)
+    console.log(success(getTime() + ' >>'), `[PID: ${process.pid}]`, '[SUCCESS]', ...msg)
 }
 const logError = function (...msg) {
-    console.log(error(getTime() + ' >>'), '[ERR]', ...msg)
+    console.log(error(getTime() + ' >>'), `[PID: ${process.pid}]`, '[ERR]', ...msg)
 }
 
 const debugInfo = function (...msg) {

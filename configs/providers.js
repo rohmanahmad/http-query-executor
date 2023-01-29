@@ -7,6 +7,12 @@ const getEnv = (key) => {
 }
 
 module.exports = {
+    components: [
+        // 'e2e', /* before activate this provider, please run this command first: npm i --save tweetnacl tweetnacl-util */
+        // 'mongodb', /* before activate this provider, please run this command first: npm i --save mongodb */
+        // 'mysql', /* before activate this provider, please run this command first: npm i --save mysql2 */
+        'redis', /* before activate this provider, please run this command first: npm i --save redis */
+    ],
     mongodb: {
         dsn: getEnv('MONGODB_DSN')
     },
@@ -23,5 +29,8 @@ module.exports = {
     },
     e2e: {
         mode: 'asymmetric', // ['asymmetric', 'symmetric']
+    },
+    redis: {
+        dsn: getEnv('REDIS_DSN')
     }
 }

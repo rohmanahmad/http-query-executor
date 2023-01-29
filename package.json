@@ -20,6 +20,7 @@
     "moment": "^2.29.4",
     "mongodb": "^4.12.1",
     "mysql2": "^2.3.3",
+    "redis": "^4.5.1",
     "require-all": "^3.0.0",
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1"
