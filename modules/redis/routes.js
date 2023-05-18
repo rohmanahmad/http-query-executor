@@ -1,9 +1,9 @@
 'use strict'
 
 const ping = require('./components/ping')
-const setkey = require('./components/setkey')
-const getkey = require('./components/getkey')
-const delkey = require('./components/delkey')
+const getKey = require('./components/get-key')
+const delKey = require('./components/del-key')
+const setKey = require('./components/set-key')
 
 module.exports = {
     name: 'redis-routes',
@@ -11,8 +11,8 @@ module.exports = {
     list: [
         // usahakan urut ya
         ping,
-        setkey,
-        getkey,
-        delkey,
+        setKey,
+        getKey,
+        delKey,
     ]
 }
