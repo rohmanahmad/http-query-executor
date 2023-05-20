@@ -1,14 +1,9 @@
 'use strict'
 
-const knowledge = require('./components/knowledge')
-const execute = require('./components/execute')
+const components = require('./components/index')
 
 module.exports = {
     name: 'mysql-routes',
     prefix: '/mysql',
-    list: [
-        // usahakan urut ya
-        knowledge,
-        execute,
-    ]
+    list: components
 }

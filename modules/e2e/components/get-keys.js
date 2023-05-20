@@ -27,7 +27,51 @@ const keyPairRouteController = {
     path: '/key/pair',
     method: 'POST',
     middlewares: ['auth'],
-    controller: keyPair
+    controller: keyPair,
+    swagger: {
+        tags: ['Encryption'],
+        summary: 'Encryption (get key pair)',
+        description: 'get key pair data with key',
+        consumes: [
+            'application/json'
+        ],
+        produces: [
+            'application/json',
+            'application/xml',
+        ],
+        parameters: [
+            'form.public_key',
+            'form.secret_key'
+        ],
+        responses: {
+            '200': {
+                description: 'Success',
+                schema: {
+                    type: 'object',
+                    properties: {
+                        status: {
+                            type: 'integer',
+                            example: 200
+                        },
+                        message: {
+                            type: 'string',
+                            example: 'success'
+                        },
+                        data: {
+                            type: 'any',
+                            example: 'any type of object, string, number and other data type'
+                        }
+                    }
+                }
+            },
+            '500': {
+                description: 'Internal Server Error',
+                schema: {
+                    '$ref': '#/references/components/response_schema/internal_server_error'
+                }
+            }
+        }
+    }
 }
 
 module.exports = keyPairRouteController

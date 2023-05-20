@@ -1,45 +1,38 @@
 'use strict'
 
-const execute = async function execute(request, response, next) {
+const controller = async function (request, response, next) {
     try {
-        let { key, value, expired=10 } = request.body
-        if (!key || !value) throw new Error('Invalid Key Or Value')
-        if (typeof value !== 'string') throw new Error('Value Should be a String')
-        if (expired) expired = parseInt(expired)
-        if (typeof expired !== 'number') throw new Error('Invalid Expired Value')
-        await this.providers.redis.set(key, value, { EX: expired })
+        const { key: k } = request.query
+        await this.providers.redis.del(k)
         response.json({ status: true })
     } catch (err) {
         next(err)
     }
 }
 
-const setkeyRouteController = {
-    name: 'setkey',
-    path: '/setkey', // action > see "availableActions" var
+const routeController = {
+    name: 'dataUpdate',
+    path: '/data/:table_name/Update',
     method: 'POST',
     middlewares: ['auth'],
-    controller: execute,
+    controller,
     swagger: {
-        tags: ['Redis'],
-        summary: 'Redis (set)',
-        description: 'Set Key From Redis Storage',
+        tags: ['MySQL'],
+        summary: 'MySQL data (Update)',
+        description: 'Update data of MySQL Storage',
         consumes: [
-            'application/x-www-form-urlencoded'
+            'application/json'
         ],
         produces: [
             'application/json',
             'application/xml',
         ],
         parameters: [
-            'form.key',
-            'form.value',
-            'form.expired'
+          'path.table_name',
+          'body.update_data',
         ],
         requires: {
-            'form.key': true,
-            'form.value': true,
-            'form.expired': true
+            'path.table_name': true
         },
         responses: {
             '200': {
@@ -72,4 +65,4 @@ const setkeyRouteController = {
     }
 }
 
-module.exports = setkeyRouteController
+module.exports = routeController

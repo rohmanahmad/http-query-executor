@@ -22,6 +22,7 @@
     "mysql2": "^2.3.3",
     "redis": "^4.5.1",
     "require-all": "^3.0.0",
+    "swagger-ui-express": "^4.6.3",
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1"
   }

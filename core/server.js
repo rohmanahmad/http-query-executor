@@ -22,6 +22,7 @@ const providers = requireAll({
         return x ? fN : false
     }
 })
+const { swaggerDoc, definition } = require(resolve('documentation'))
 const routes = require('./routes')
 const helpers = requireAll({
     dirname: resolve('core/helpers'),
@@ -78,10 +79,14 @@ class Server {
         try {
             app.disable('x-powered-by')
             app.use(helmet())
-            app.use(bodyParser.urlencoded({ extended: false }))
+            // parse application/x-www-form-urlencoded
+            app.use(bodyParser.urlencoded({ extended: true }))
+            // app.use(bodyParser.raw())
+            // parse application/json
             app.use(bodyParser.json())
             await this.registerProviders()
             if (this.config.app.node_env === 'production') app.use(compression()) // best practice for performance
+            let swaggerPaths = {}
             for (const routeGroup in routes) {
                 const group = routes[routeGroup]
                 const groupName = getResult(group, 'routes.name', '-')
@@ -95,16 +100,32 @@ class Server {
                         ...this.getGlobalMiddlewares(),
                         ...this.getRouteMiddlewares(route.middlewares)
                     ]
-                    this.registerRoute({
+                    const routeComponent = {
                         name: routeName,
                         group_name: groupName,
                         method,
                         path: join(routePrefix, route.path),
                         middlewares,
                         controller: route.controller
-                    })
+                    }
+                    this.registerRoute(routeComponent)
+                    const swg = route.swagger
+                    if (!swg) continue
+                    const m = method.toLowerCase()
+                    swaggerPaths[routeComponent.path] = {
+                        [m]: {
+                            tags: swg.tags || [],
+                            summary: swg.summary || '',
+                            description: swg.description || '',
+                            consumes: swg.consumes || [],
+                            produces: swg.produces || [],
+                            parameters: (swg.parameters || []).map(x => definition(x, swg.requires, swg.enums, swg.defaults)),
+                            responses: swg.responses || {}
+                        }
+                    }
                 }
             }
+            swaggerDoc(app, swaggerPaths)
             // registering route not-found
             this.registerRoute({
                 name: 'any_not_found',
@@ -113,7 +134,7 @@ class Server {
                 path: '*',
                 middlewares: [],
                 controller: function (request, response) {
-                    response.json({
+                    response.status(404).json({
                         status: 404,
                         method: request.method,
                         message: 'HTTP URL Not Found'
