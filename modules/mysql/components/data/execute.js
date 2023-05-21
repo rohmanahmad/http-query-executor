@@ -45,12 +45,12 @@ const execute = async function execute(request, response, next) {
 
 const executeRouteController = {
     name: 'execute',
-    path: '/execute/:action', // action > see "availableActions" var
+    path: '/data/:table_name/execute/:action', // action > see "availableActions" var
     method: 'POST',
     middlewares: ['auth'],
     controller: execute,
     swagger: {
-        tags: ['MySQL'],
+        tags: ['MySQL(Data Operation)'],
         summary: 'MySQL (Execute)',
         description: 'Execute data with key',
         consumes: [
@@ -61,6 +61,7 @@ const executeRouteController = {
             'application/xml',
         ],
         parameters: [
+            'path.table_name',
             'path.action',
             'body.sql_execute'
         ],
@@ -71,7 +72,9 @@ const executeRouteController = {
             'path.action': 'data-list'
         },
         requires: {
-            'path.action': true
+            'path.table_name': true,
+            'path.action': true,
+            'path.sql_execute': true,
         },
         responses: {
             '200': {

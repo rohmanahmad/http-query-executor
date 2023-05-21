@@ -20,7 +20,14 @@ const path = {
   table_name: {
     name: 'table_name',
     in: 'path',
-    description: 'table_name type',
+    description: 'table name',
+    required: false,
+    type: 'string'
+  },
+  collection: {
+    name: 'collection',
+    in: 'path',
+    description: 'collection name',
     required: false,
     type: 'string'
   }

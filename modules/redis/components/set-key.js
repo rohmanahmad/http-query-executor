@@ -1,6 +1,6 @@
 'use strict'
 
-const execute = async function execute(request, response, next) {
+const controller = async function controller(request, response, next) {
     try {
         let { key, value, expired=10 } = request.body
         if (!key || !value) throw new Error('Invalid Key Or Value')
@@ -14,14 +14,14 @@ const execute = async function execute(request, response, next) {
     }
 }
 
-const setkeyRouteController = {
+const routeController = {
     name: 'setkey',
     path: '/setkey', // action > see "availableActions" var
     method: 'POST',
     middlewares: ['auth'],
-    controller: execute,
+    controller,
     swagger: {
-        tags: ['Redis'],
+        tags: ['Redis(Operation)'],
         summary: 'Redis (set)',
         description: 'Set Key From Redis Storage',
         consumes: [
@@ -72,4 +72,4 @@ const setkeyRouteController = {
     }
 }
 
-module.exports = setkeyRouteController
+module.exports = routeController

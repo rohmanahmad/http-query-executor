@@ -1,6 +1,6 @@
 'use strict'
 
-const execute = async function execute(request, response, next) {
+const controller = async function controller(request, response, next) {
     try {
         const key = request.query.key
         if (!key) throw new Error('Invalid Key')
@@ -11,14 +11,14 @@ const execute = async function execute(request, response, next) {
     }
 }
 
-const getkeyRouteController = {
+const routeController = {
     name: 'getkey',
     path: '/get-key', // action > see "availableActions" var
     method: 'GET',
     middlewares: ['auth'],
-    controller: execute,
+    controller,
     swagger: {
-        tags: ['Redis'],
+        tags: ['Redis(Operation)'],
         summary: 'Redis (get)',
         description: 'Get Key From Redis Storage',
         consumes: [
@@ -63,4 +63,4 @@ const getkeyRouteController = {
     }
 }
 
-module.exports = getkeyRouteController
+module.exports = routeController

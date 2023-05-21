@@ -1,6 +1,6 @@
 'use strict'
 
-const controller = async function (request, response, next) {
+const controller = async function controller(request, response, next) {
     try {
         response.json({ status: true })
     } catch (err) {
@@ -9,15 +9,15 @@ const controller = async function (request, response, next) {
 }
 
 const routeController = {
-    name: 'dataUpdate',
-    path: '/data/:table_name/Update',
-    method: 'POST',
+    name: 'info',
+    path: '/info', // action > see "availableActions" var
+    method: 'GET',
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Data Operation)'],
-        summary: 'MySQL data (Update)',
-        description: 'Update data of MySQL Storage',
+        tags: ['Redis(General)'],
+        summary: 'Redis (Info)',
+        description: 'Information Of Redis Storage',
         consumes: [
             'application/json'
         ],
@@ -25,16 +25,12 @@ const routeController = {
             'application/json',
             'application/xml',
         ],
-        parameters: [
-          'path.table_name',
-          'body.update_data',
-        ],
+        parameters: [],
         requires: {
-            'path.table_name': true
         },
         responses: {
             '200': {
-                description: 'Success',
+                description: 'Success Delete',
                 schema: {
                     type: 'object',
                     properties: {

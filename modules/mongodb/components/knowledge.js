@@ -1,23 +1,22 @@
 'use strict'
 
-const controller = async function (request, response, next) {
-    try {
-        response.json({ status: true })
-    } catch (err) {
-        next(err)
-    }
+const controller = async function controller(request, response) {
+    const { version, last_restart, author } = this.config.app.server
+    response.json({
+        Info: true
+    })
 }
 
 const routeController = {
-    name: 'dataUpdate',
-    path: '/data/:table_name/Update',
-    method: 'POST',
+    name: 'Info',
+    path: '/info',
+    method: 'GET',
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Data Operation)'],
-        summary: 'MySQL data (Update)',
-        description: 'Update data of MySQL Storage',
+        tags: ['MongoDB(General)'],
+        summary: 'MongoDB (Info)',
+        description: 'Info',
         consumes: [
             'application/json'
         ],
@@ -25,13 +24,7 @@ const routeController = {
             'application/json',
             'application/xml',
         ],
-        parameters: [
-          'path.table_name',
-          'body.update_data',
-        ],
-        requires: {
-            'path.table_name': true
-        },
+        parameters: [],
         responses: {
             '200': {
                 description: 'Success',

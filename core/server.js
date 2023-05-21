@@ -112,7 +112,17 @@ class Server {
                     const swg = route.swagger
                     if (!swg) continue
                     const m = method.toLowerCase()
-                    swaggerPaths[routeComponent.path] = {
+                    let routeComponentPath = routeComponent.path
+                    if (swg.parameters) {
+                        const swgParametersPath = swg.parameters
+                            .filter(x => x.indexOf('path.') > -1)
+                            .map(x => x.replace('path.', ''))
+                        routeComponentPath = swgParametersPath
+                            .reduce((r, x) => {
+                                return r.replace(`:${x}`, `{${x}}`)
+                            }, routeComponentPath)
+                    }
+                    swaggerPaths[routeComponentPath] = {
                         [m]: {
                             tags: swg.tags || [],
                             summary: swg.summary || '',

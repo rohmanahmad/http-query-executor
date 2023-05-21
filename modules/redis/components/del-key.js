@@ -1,6 +1,6 @@
 'use strict'
 
-const execute = async function execute(request, response, next) {
+const controller = async function controller(request, response, next) {
     try {
         const { key: k } = request.query
         await this.providers.redis.del(k)
@@ -10,14 +10,14 @@ const execute = async function execute(request, response, next) {
     }
 }
 
-const delkeyRouteController = {
+const routeController = {
     name: 'delkey',
     path: '/delkey', // action > see "availableActions" var
     method: 'GET',
     middlewares: ['auth'],
-    controller: execute,
+    controller,
     swagger: {
-        tags: ['Redis'],
+        tags: ['Redis(Operation)'],
         summary: 'Redis (delete)',
         description: 'Delete Key From Redis Storage',
         consumes: [
@@ -62,4 +62,4 @@ const delkeyRouteController = {
     }
 }
 
-module.exports = delkeyRouteController
+module.exports = routeController

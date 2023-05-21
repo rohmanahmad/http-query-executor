@@ -9,15 +9,15 @@ const controller = async function (request, response, next) {
 }
 
 const routeController = {
-    name: 'dataUpdate',
-    path: '/data/:table_name/Update',
+    name: 'dataAdd',
+    path: '/data/:collection/add',
     method: 'POST',
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Data Operation)'],
-        summary: 'MySQL data (Update)',
-        description: 'Update data of MySQL Storage',
+        tags: ['MongoDB(Data Operation)'],
+        summary: 'MongoDB data (Add)',
+        description: 'Add data of MongoDB Storage',
         consumes: [
             'application/json'
         ],
@@ -26,11 +26,11 @@ const routeController = {
             'application/xml',
         ],
         parameters: [
-          'path.table_name',
-          'body.update_data',
+          'path.collection',
+          'body.add_data',
         ],
         requires: {
-            'path.table_name': true
+            'path.collection': true
         },
         responses: {
             '200': {
@@ -57,6 +57,12 @@ const routeController = {
                 description: 'Internal Server Error',
                 schema: {
                     '$ref': '#/references/components/response_schema/internal_server_error'
+                }
+            },
+            '404': {
+                description: 'Route Not Found',
+                schema: {
+                    '$ref': '#/references/components/response_schema/route_not_found'
                 }
             }
         },

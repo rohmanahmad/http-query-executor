@@ -2,8 +2,6 @@
 
 const controller = async function (request, response, next) {
     try {
-        const { key: k } = request.query
-        await this.providers.redis.del(k)
         response.json({ status: true })
     } catch (err) {
         next(err)
@@ -17,7 +15,7 @@ const routeController = {
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL'],
+        tags: ['MySQL(Data Operation)'],
         summary: 'MySQL data (Delete)',
         description: 'Delete data of MySQL Storage',
         consumes: [

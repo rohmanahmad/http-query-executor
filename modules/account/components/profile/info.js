@@ -9,15 +9,15 @@ const controller = async function (request, response, next) {
 }
 
 const routeController = {
-    name: 'dataUpdate',
-    path: '/data/:table_name/Update',
-    method: 'POST',
+    name: 'ProfileInfo',
+    path: '/profile/info',
+    method: 'GET',
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Data Operation)'],
-        summary: 'MySQL data (Update)',
-        description: 'Update data of MySQL Storage',
+        tags: ['Account Profile(Operation)'],
+        summary: 'Account Profile (Info)',
+        description: 'Info Profiles of Account',
         consumes: [
             'application/json'
         ],
@@ -25,12 +25,8 @@ const routeController = {
             'application/json',
             'application/xml',
         ],
-        parameters: [
-          'path.table_name',
-          'body.update_data',
-        ],
+        parameters: [],
         requires: {
-            'path.table_name': true
         },
         responses: {
             '200': {

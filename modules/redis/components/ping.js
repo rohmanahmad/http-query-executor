@@ -1,6 +1,6 @@
 'use strict'
 
-const execute = async function execute(request, response, next) {
+const controller = async function controller(request, response, next) {
     try {
         const data = await this.providers.redis.ping()
         response.json(data)
@@ -9,14 +9,14 @@ const execute = async function execute(request, response, next) {
     }
 }
 
-const pingRouteController = {
+const routeController = {
     name: 'ping',
     path: '/ping', // action > see "availableActions" var
     method: 'GET',
     middlewares: ['auth'],
-    controller: execute,
+    controller,
     swagger: {
-        tags: ['Redis'],
+        tags: ['Redis(General)'],
         summary: 'Redis (ping)',
         description: 'Check Connection From Redis Server',
         consumes: [
@@ -58,4 +58,4 @@ const pingRouteController = {
     }
 }
 
-module.exports = pingRouteController
+module.exports = routeController

@@ -9,15 +9,15 @@ const controller = async function (request, response, next) {
 }
 
 const routeController = {
-    name: 'dataUpdate',
-    path: '/data/:table_name/Update',
+    name: 'authLogin',
+    path: '/auth/login',
     method: 'POST',
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Data Operation)'],
-        summary: 'MySQL data (Update)',
-        description: 'Update data of MySQL Storage',
+        tags: ['Account(Authentication)'],
+        summary: 'Account Auth Login',
+        description: 'Login Account',
         consumes: [
             'application/json'
         ],
@@ -26,11 +26,8 @@ const routeController = {
             'application/xml',
         ],
         parameters: [
-          'path.table_name',
-          'body.update_data',
         ],
         requires: {
-            'path.table_name': true
         },
         responses: {
             '200': {
@@ -57,6 +54,12 @@ const routeController = {
                 description: 'Internal Server Error',
                 schema: {
                     '$ref': '#/references/components/response_schema/internal_server_error'
+                }
+            },
+            '404': {
+                description: 'Route Not Found',
+                schema: {
+                    '$ref': '#/references/components/response_schema/route_not_found'
                 }
             }
         },

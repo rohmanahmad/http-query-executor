@@ -2,8 +2,6 @@
 
 const controller = async function (request, response, next) {
     try {
-        const { key: k } = request.query
-        await this.providers.redis.del(k)
         response.json({ status: true })
     } catch (err) {
         next(err)
@@ -12,12 +10,12 @@ const controller = async function (request, response, next) {
 
 const routeController = {
     name: 'dataAdd',
-    path: '/data/{table_name}/add',
+    path: '/data/:table_name/add',
     method: 'POST',
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL'],
+        tags: ['MySQL(Data Operation)'],
         summary: 'MySQL data (Add)',
         description: 'Add data of MySQL Storage',
         consumes: [

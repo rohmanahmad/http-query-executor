@@ -1,5 +1,6 @@
 'use strict'
 
+const info = require('./components/info')
 const ping = require('./components/ping')
 const getKey = require('./components/get-key')
 const delKey = require('./components/del-key')
@@ -10,6 +11,7 @@ module.exports = {
     prefix: '/redis',
     list: [
         // usahakan urut ya
+        info,
         ping,
         setKey,
         getKey,

@@ -1,22 +1,22 @@
 'use strict'
 
-const knowledge = async function knowledge(request, response) {
+const controller = async function controller(request, response) {
     const { version, last_restart, author } = this.config.app.server
     response.json({
-        knowledge: true
+        Info: true
     })
 }
 
-const knowledgeRouteController = {
-    name: 'knowledge',
-    path: '/knowledge',
+const routeController = {
+    name: 'Info',
+    path: '/info',
     method: 'GET',
     middlewares: ['auth'],
-    controller: knowledge,
+    controller,
     swagger: {
-        tags: ['MySQL'],
-        summary: 'MySQL (Knowledge)',
-        description: 'Knowledge',
+        tags: ['MySQL(General)'],
+        summary: 'MySQL (Info)',
+        description: 'Info of MySQL',
         consumes: [
             'application/json'
         ],
@@ -56,4 +56,4 @@ const knowledgeRouteController = {
     }
 }
 
-module.exports = knowledgeRouteController
+module.exports = routeController
