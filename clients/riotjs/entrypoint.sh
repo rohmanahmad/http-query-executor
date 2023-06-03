@@ -13,6 +13,6 @@ sed -i "s|daterangepicker.css|daterangepicker.css?cache=$(date +%m%d%y%H%M%S)|g"
 sed -i "s|manifest.js|manifest.js?cache=$(date +%m%d%y%H%M%S)|g" "/usr/share/nginx/html/index.html"
 sed -i "s|main.js|main.js?cache=$(date +%m%d%y%H%M%S)|g" "/usr/share/nginx/html/index.html"
 sed -i "s|vendor.js|vendor.js?cache=$(date +%m%d%y%H%M%S)|g" "/usr/share/nginx/html/index.html"
-cat /usr/share/nginx/html/js/main.js | grep commbank-frontend
+cat /usr/share/nginx/html/js/main.js | grep clients
 
 exec "$@"

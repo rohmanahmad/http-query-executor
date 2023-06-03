@@ -22,7 +22,7 @@ export default {
     },
     onBeforeMount() {
         this.invalidDomains = []
-        this.runTest('commbank-api', process.env.MIX_PROXY_URL_BASE)
+        this.runTest('api', process.env.MIX_PROXY_URL_BASE)
     },
     onBeforeUnmount() {
         cancelAllRequest()

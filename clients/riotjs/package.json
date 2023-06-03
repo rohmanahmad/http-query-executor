@@ -1,10 +1,10 @@
 {
   "private": true,
-  "name": "commbank-frontend",
+  "name": "client",
   "app_version": "3.7.26",
   "node_version": "14.17.3",
   "version": "1.1.0",
-  "description": "Commbank CMS Dashboard",
+  "description": "client Dashboard",
   "scripts": {
     "dev": "nodemon -x npm run watch --watch .env --watch package.json --watch webpack.mix.js",
     "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",

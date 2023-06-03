@@ -6,7 +6,7 @@ networks:
 
 services:
   push:
-    image: ivosights/commbank-frontend:3.7.25
+    image: ''
     environment:
       - PREFIX_APP_PATH=/ekyc
       - AJAX_BASE_API_URL=http://backend_testing_image_1:5002
