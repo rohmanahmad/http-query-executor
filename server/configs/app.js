@@ -20,4 +20,10 @@ module.exports = {
     global_middlewares: [
         'collector'
     ],
+    modules: [
+        'mysql',
+        'e2e',
+        'mongodb',
+        'redis'
+    ]
 }

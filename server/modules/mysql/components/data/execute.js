@@ -50,7 +50,7 @@ const executeRouteController = {
     middlewares: ['auth'],
     controller: execute,
     swagger: {
-        tags: ['MySQL(Data Operation)'],
+        tags: ['MySQL(Data)'],
         summary: 'MySQL (Execute)',
         description: 'Execute data with key',
         consumes: [
@@ -61,20 +61,20 @@ const executeRouteController = {
             'application/xml',
         ],
         parameters: [
-            'path.table_name',
-            'path.action',
-            'body.sql_execute'
+            // 'paths.mysql_table_name',
+            // 'paths.action',
+            // 'body.sql_execute'
         ],
         enums: {
-            'path.action': Object.keys(availableActions)
+            // 'paths.action': Object.keys(availableActions)
         },
         defaults: {
-            'path.action': 'data-list'
+            // 'paths.action': 'data-list'
         },
         requires: {
-            'path.table_name': true,
-            'path.action': true,
-            'path.sql_execute': true,
+            // 'paths.mysql_table_name': true,
+            // 'paths.action': true,
+            // 'paths.sql_execute': true,
         },
         responses: {
             '200': {

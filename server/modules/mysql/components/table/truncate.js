@@ -15,7 +15,7 @@ const routeController = {
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Table Operation)'],
+        tags: ['MySQL(Table)'],
         summary: 'MySQL Table (Truncate)',
         description: 'Truncate tables of MySQL Storage',
         consumes: [

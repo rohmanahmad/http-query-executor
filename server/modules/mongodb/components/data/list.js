@@ -15,7 +15,7 @@ const routeController = {
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MongoDB(Data Operation)'],
+        tags: ['MongoDB(Data)'],
         summary: 'MongoDB data (List)',
         description: 'List data of MongoDB Storage',
         consumes: [
@@ -26,11 +26,11 @@ const routeController = {
             'application/xml',
         ],
         parameters: [
-          'path.collection',
-          'body.list_data',
+          'paths.mongodb_collection',
+        //   'body.list_data',
         ],
         requires: {
-            'path.collection': true
+            'paths.mongodb_collection': true
         },
         responses: {
             '200': {

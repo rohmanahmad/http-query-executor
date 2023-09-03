@@ -15,7 +15,7 @@ const routeController = {
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MongoDB(collection Operation)'],
+        tags: ['MongoDB(Collection)'],
         summary: 'MongoDB collection (Indexing)',
         description: 'Indexing collections of MongoDB Storage',
         consumes: [

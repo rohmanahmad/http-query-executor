@@ -25,10 +25,10 @@ const decryptRouteController = {
             'application/xml',
         ],
         parameters: [
-            'form.final_key',
-            'form.payload',
-            'form.key',
-            'form.mode',
+            'forms.enc_final_key',
+            'forms.enc_payload',
+            'forms.enc_key',
+            'forms.enc_mode',
         ],
         responses: {
             '200': {

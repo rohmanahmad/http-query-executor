@@ -28,9 +28,9 @@ const routeController = {
             'application/json',
             'application/xml',
         ],
-        parameters: ['query.key'],
+        parameters: ['queries.redis_key'],
         requires: {
-            'query.key': true
+            'queries.redis_key': true
         },
         responses: {
             '200': {

@@ -32,14 +32,14 @@ const routeController = {
             'application/xml',
         ],
         parameters: [
-            'form.key',
-            'form.value',
-            'form.expired'
+            'forms.redis_key',
+            'forms.redis_value',
+            'forms.redis_expired'
         ],
         requires: {
-            'form.key': true,
-            'form.value': true,
-            'form.expired': true
+            'forms.redis_key': true,
+            'forms.redis_value': true,
+            'forms.redis_expired': true
         },
         responses: {
             '200': {

@@ -3,6 +3,9 @@
 const controller = async function (request, response, next) {
     try {
         const body = request.body
+        const pool = await this.providers.mysql.pool
+        const queryString = []
+        queryString.push(`CREATE TABLE IF NOT EXISTS ${body.table_name}`)
         response.json({ status: true })
     } catch (err) {
         next(err)
@@ -16,7 +19,7 @@ const routeController = {
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Table Operation)'],
+        tags: ['MySQL(Table)'],
         summary: 'MySQL Table (Create)',
         description: 'Create tables of MySQL Storage',
         consumes: [
@@ -27,7 +30,7 @@ const routeController = {
             'application/xml',
         ],
         parameters: [
-            'body.table_create'
+            // 'body.table_create'
         ],
         requires: {
         },

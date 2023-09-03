@@ -9,15 +9,15 @@ const controller = async function (request, response, next) {
 }
 
 const routeController = {
-    name: 'dataAdd',
-    path: '/data/:table_name/add',
+    name: 'dataInsert',
+    path: '/data/:table_name/insert',
     method: 'POST',
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Data Operation)'],
-        summary: 'MySQL data (Add)',
-        description: 'Add data of MySQL Storage',
+        tags: ['MySQL(Data)'],
+        summary: 'MySQL data (Insert)',
+        description: 'Insert New Data',
         consumes: [
             'application/json'
         ],
@@ -26,11 +26,11 @@ const routeController = {
             'application/xml',
         ],
         parameters: [
-          'path.table_name',
-          'body.add_data',
+          'paths.mysql_table_name',
+          'body.mysql_insert_data',
         ],
         requires: {
-            'path.table_name': true
+            'paths.mysql_table_name': true
         },
         responses: {
             '200': {

@@ -5,18 +5,18 @@ const { box } = require('tweetnacl/nacl-fast')
 const keyPair = async function keyPair(request, response) {
     let { public_key: publicKey, secret_key: secretKey } = this.input.body
     let keyA, keyB, encodedA
-    
+
     keyA = this.providers.e2e.generateKeyPair('asymmetric')
 
     publicKey = new Uint8Array(publicKey.split(','))
     secretKey = new Uint8Array(secretKey.split(','))
 
     keyB = { publicKey, secretKey }
-    
+
     const Uint8ArrayEncodedA = box.before(keyB.publicKey, keyA.secretKey)
-    
+
     encodedA = Uint8ArrayEncodedA.join(',')
-    
+
     response.json({
         final: encodedA
     })
@@ -40,8 +40,8 @@ const keyPairRouteController = {
             'application/xml',
         ],
         parameters: [
-            'form.public_key',
-            'form.secret_key'
+            'forms.enc_public_key',
+            'forms.enc_secret_key'
         ],
         responses: {
             '200': {

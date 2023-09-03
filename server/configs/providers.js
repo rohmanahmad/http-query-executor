@@ -11,7 +11,7 @@ module.exports = {
         // 'e2e', /* before activate this provider, please run this command first: npm i --save tweetnacl tweetnacl-util */
         // 'mongodb', /* before activate this provider, please run this command first: npm i --save mongodb */
         'mysql', /* before activate this provider, please run this command first: npm i --save mysql2 */
-        'redis', /* before activate this provider, please run this command first: npm i --save redis */
+        // 'redis', /* before activate this provider, please run this command first: npm i --save redis */
     ],
     mongodb: {
         dsn: getEnv('MONGODB_DSN')

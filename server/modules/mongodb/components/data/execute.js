@@ -26,7 +26,7 @@ const executeRouteController = {
     middlewares: ['auth'],
     controller: execute,
     swagger: {
-        tags: ['MongoDB(Data Operation)'],
+        tags: ['MongoDB(Data)'],
         summary: 'MongoDB (Execute)',
         description: 'Execute data with key',
         consumes: [
@@ -37,20 +37,20 @@ const executeRouteController = {
             'application/xml',
         ],
         parameters: [
-            'path.collection',
-            'path.action',
-            'body.sql_execute'
+            'paths.mongodb_collection',
+            // 'paths.action',
+            // 'body.sql_execute'
         ],
         enums: {
-            'path.action': Object.keys(availableActions)
+            // 'paths.action': Object.keys(availableActions)
         },
         defaults: {
-            'path.action': 'data-list'
+            // 'paths.action': 'data-list'
         },
         requires: {
-            'path.collection': true,
-            'path.action': true,
-            'path.sql_execute': true,
+            // 'paths.mongodb_collection': true,
+            // 'paths.action': true,
+            // 'paths.sql_execute': true,
         },
         responses: {
             '200': {

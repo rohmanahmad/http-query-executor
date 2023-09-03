@@ -15,7 +15,7 @@ const routeController = {
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MongoDB(collection Operation)'],
+        tags: ['MongoDB(Collection)'],
         summary: 'MongoDB collection (Create)',
         description: 'Create collections of MongoDB Storage',
         consumes: [

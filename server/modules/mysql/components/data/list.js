@@ -15,9 +15,9 @@ const routeController = {
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Data Operation)'],
+        tags: ['MySQL(Data)'],
         summary: 'MySQL data (List)',
-        description: 'List data of MySQL Storage',
+        description: 'List Data',
         consumes: [
             'application/json'
         ],
@@ -26,11 +26,11 @@ const routeController = {
             'application/xml',
         ],
         parameters: [
-          'path.table_name',
-          'body.list_data',
+        //   'paths.mysql_table_name',
+        //   'body.list_data',
         ],
         requires: {
-            'path.table_name': true
+            'paths.mysql_table_name': true
         },
         responses: {
             '200': {

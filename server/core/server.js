@@ -1,5 +1,6 @@
 'use strict'
 
+const fs = require('fs')
 const requireAll = require('require-all')
 const http = require('http')
 const express = require('express')
@@ -12,6 +13,7 @@ const { createTerminus } = require('@godaddy/terminus')
 const responseExtend = require('./response')
 
 const acceptedProviders = require(resolve('configs/providers')).components
+const modules = fs.readdirSync(resolve('modules'))
 const providers = requireAll({
     dirname: resolve('core/providers'),
     recursive: false,
@@ -22,7 +24,8 @@ const providers = requireAll({
         return x ? fN : false
     }
 })
-const { swaggerDoc, definition } = require(resolve('documentation'))
+const Documentation = require(resolve('documentation'))
+const docs = new Documentation(modules).getConfig()
 const routes = require('./routes')
 const helpers = requireAll({
     dirname: resolve('core/helpers'),
@@ -129,13 +132,13 @@ class Server {
                             description: swg.description || '',
                             consumes: swg.consumes || [],
                             produces: swg.produces || [],
-                            parameters: (swg.parameters || []).map(x => definition(x, swg.requires, swg.enums, swg.defaults)),
+                            parameters: (swg.parameters || []).map(x => docs.definition(x, swg.requires, swg.enums, swg.defaults)),
                             responses: swg.responses || {}
                         }
                     }
                 }
             }
-            swaggerDoc(app, swaggerPaths)
+            docs.swaggerDoc(app, swaggerPaths)
             // registering route not-found
             this.registerRoute({
                 name: 'any_not_found',

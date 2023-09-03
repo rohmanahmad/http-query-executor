@@ -1,5 +1,5 @@
 // DATA
-const dataAdd = require('./data/add')
+const dataInsert = require('./data/insert')
 const dataDelete = require('./data/delete')
 const dataList = require('./data/list')
 const dataUpdate = require('./data/update')
@@ -19,7 +19,7 @@ module.exports = [
   knowledge,
   dataExecute,
   dataList,
-  dataAdd,
+  dataInsert,
   dataDelete,
   dataUpdate,
   tableList,

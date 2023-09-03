@@ -10,12 +10,12 @@ const controller = async function (request, response, next) {
 
 const routeController = {
     name: 'dataUpdate',
-    path: '/data/:table_name/Update',
+    path: '/data/:table_name/update',
     method: 'POST',
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Data Operation)'],
+        tags: ['MySQL(Data)'],
         summary: 'MySQL data (Update)',
         description: 'Update data of MySQL Storage',
         consumes: [
@@ -26,11 +26,11 @@ const routeController = {
             'application/xml',
         ],
         parameters: [
-          'path.table_name',
-          'body.update_data',
+          'paths.mysql_table_name',
+        //   'body.update_data',
         ],
         requires: {
-            'path.table_name': true
+            'paths.mysql_table_name': true
         },
         responses: {
             '200': {

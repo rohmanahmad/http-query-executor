@@ -15,7 +15,7 @@ const routeController = {
     middlewares: ['auth'],
     controller,
     swagger: {
-        tags: ['MySQL(Table Operation)'],
+        tags: ['MySQL(Table)'],
         summary: 'MySQL Table (Alter)',
         description: 'Alter tables of MySQL Storage',
         consumes: [
