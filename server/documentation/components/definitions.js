@@ -90,6 +90,13 @@ const form = {
     description: 'secret_key For Encryption',
     required: false,
     type: 'string'
+  },
+  table_name: {
+    name: 'table_name',
+    in: 'formData',
+    description: 'table_name For Encryption',
+    required: false,
+    type: 'string'
   }
 }
 
@@ -171,6 +178,40 @@ const body = {
         sql: { type: 'string' },
         params: { type: 'object' },
         options: { type: 'object' },
+      }
+    }
+  },
+  table_create: {
+    name: 'table_create',
+    in: 'body',
+    description: 'schema',
+    required: false,
+    type: 'object',
+    schema: {
+      type: 'object',
+      required: ['table_name', 'schema'],
+      properties: {
+        table_name: { type: 'string' },
+        schema: {
+          type: 'object',
+          example: {
+            field1: 'string',
+            field2: 'string',
+            field3: 'string',
+            fieldN: 'string'
+          }
+        },
+        indexes: {
+          type: 'array',
+          items: [
+            {
+              type: 'object',
+              properties: {
+                index_key_1: 1
+              }
+            }
+          ]
+        },
       }
     }
   }

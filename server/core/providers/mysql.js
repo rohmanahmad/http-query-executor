@@ -1,6 +1,6 @@
 'use strict'
 
-const MysqlClient = require('mysql2')
+const MysqlClient = require('mysql2/promise')
 
 class MysqlProvider {
     constructor(config) {

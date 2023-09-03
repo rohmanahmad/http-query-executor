@@ -1,12 +1,10 @@
-import {install} from 'riot'
+import { install } from 'riot'
 import path from 'path'
 
 const classNames = (classes) => {
   return Object.entries(classes).reduce((acc, item) => {
     const [key, value] = item
-
     if (value) return [...acc, key]
-
       return acc
   }, []).join(' ')
 }
@@ -14,7 +12,6 @@ const classNames = (classes) => {
 const styleAttribute = (attributes) => {
   return Object.entries(attributes).reduce((acc, item) => {
     const [key, value] = item
-
     return [...acc, `${key}: ${value}`]
   }, []).join(';')
 }
@@ -62,6 +59,5 @@ install((component) => {
   component.setLink = setLink
   component.showItem = showItem
   component.showingModal = showingModal
-
   return component
 })

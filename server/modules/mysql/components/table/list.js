@@ -2,7 +2,8 @@
 
 const controller = async function (request, response, next) {
     try {
-        response.json({ status: true })
+        const data = await this.providers.mysql.pool.query('SHOW TABLES;')
+        response.json({ status: true, data: data[0] })
     } catch (err) {
         next(err)
     }

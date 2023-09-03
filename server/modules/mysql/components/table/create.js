@@ -2,6 +2,7 @@
 
 const controller = async function (request, response, next) {
     try {
+        const body = request.body
         response.json({ status: true })
     } catch (err) {
         next(err)
@@ -25,7 +26,9 @@ const routeController = {
             'application/json',
             'application/xml',
         ],
-        parameters: [],
+        parameters: [
+            'body.table_create'
+        ],
         requires: {
         },
         responses: {
